@@ -70,7 +70,8 @@ public class CitiesService extends IntentService {
             try {
                 Response<WeatherPojo> response = weatherCall.execute();
                 if (response.errorBody() != null) {                                //обработка ошибки
-                    Toast toast = Toast.makeText(getApplicationContext(), "asdasdasd", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Не удалось добавить город", Toast.LENGTH_SHORT);
+                    System.out.println("ERROR BODY");
                     toast.setGravity(Gravity.CENTER, 0,0);
                     toast.show();
                     getContentResolver().notifyChange(CityContract.getBaseUri(), null);
@@ -119,7 +120,7 @@ public class CitiesService extends IntentService {
                     } else {
                         WeatherPojo weatherMap = response.body();
                         for (com.example.khlopunov.cityweatherdb.models.List getCities : weatherMap.getList()) {
-                            int degrees = (int) (getCities.getMain().getTemp() - 300);
+                            int degrees = (int) (getCities.getMain().getTemp() - 273);
                             int id = getCities.getId();
                             City mCity = new City(id, getCities.getName(), degrees);
                             getContentResolver().update(CityContract.getBaseUri(), CityContract.toContentValues(mCity),
