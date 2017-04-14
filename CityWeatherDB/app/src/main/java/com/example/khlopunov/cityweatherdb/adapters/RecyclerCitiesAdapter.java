@@ -60,7 +60,6 @@ public class RecyclerCitiesAdapter extends RecyclerView.Adapter<RecyclerCitiesAd
 
     @Override
     public int getItemCount() {
-        System.out.println("DATA CHANGED");
         Cursor mCursor = context.getContentResolver().query(CityContract.getBaseUri(),
                 null, null, null, null);
         if (mCursor != null) {
@@ -70,10 +69,6 @@ public class RecyclerCitiesAdapter extends RecyclerView.Adapter<RecyclerCitiesAd
                 mCities.add(changedCity);
             }
             mCursor.close();
-            for (City iterableCity : mCities) {
-                System.out.println("City Name = " + iterableCity.getName() +
-                        "" + iterableCity.getDegrees() + "ID" + iterableCity.getId());
-            }
         }
         return mCities.size();
     }

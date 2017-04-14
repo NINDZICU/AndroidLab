@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.example.khlopunov.cityweatherdb.adapters.RecyclerCitiesAdapter;
 import com.example.khlopunov.cityweatherdb.data.CityOpenHelper;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnAddCity;
     private Button btnRefresh;
     private RecyclerView rv;
+    private ProgressBar progressBar;
 
     private RecyclerCitiesAdapter adapter;
 
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         btnAddCity = (Button) findViewById(R.id.btn_add);
         btnRefresh = (Button) findViewById(R.id.btn_update);
         rv = (RecyclerView) findViewById(R.id.rv_cities);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
         adapter = new RecyclerCitiesAdapter(MainActivity.this);
@@ -59,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (etNameCity.getText().length() != 0) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    rv.setVisibility(View.GONE);
                     CitiesService.start(MainActivity.this, etNameCity.getText().toString());
                     etNameCity.setText("");
                 }
@@ -68,8 +73,9 @@ public class MainActivity extends AppCompatActivity {
         btnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                rv.setVisibility(View.GONE);
                 CitiesService.startUpdate(MainActivity.this);
-                adapter.onUpdate();
             }
         });
 
@@ -81,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void cityDataChanged() {
+        progressBar.setVisibility(View.GONE);
+        rv.setVisibility(View.VISIBLE);
         adapter.onUpdate();
     }
+
+
 }

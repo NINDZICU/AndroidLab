@@ -26,9 +26,10 @@
                 android:id="@+id/tv_degrees"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="end|center"
+                android:layout_marginLeft="10dp"
                 android:textColor="#FFBB0000"
-                android:textSize="20sp" />
+                android:textSize="30sp" />
         </LinearLayout>
 
         <Button

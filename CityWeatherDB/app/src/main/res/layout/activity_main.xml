@@ -1,63 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_main"
+    <LinearLayout
+        android:id="@+id/top_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp"
-        android:paddingBottom="16dp"
-        android:paddingLeft="64dp"
-        android:paddingRight="64dp"
-        android:paddingTop="16dp"
-        android:scrollbars="vertical"
-        tools:context="com.example.khlopunov.cityweather.activity.MainActivity">
+        android:layout_height="wrap_content"
+        android:padding="5dp">
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/et_add_city"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add" />
+    </LinearLayout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_layout">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/activity_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="8dp"
+            android:scrollbars="vertical"
+            tools:context="com.example.khlopunov.cityweather.activity.MainActivity">
 
-            <EditText
-                android:id="@+id/et_add_city"
-                android:layout_width="250dp"
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content" />
 
-            <Button
-                android:id="@+id/btn_add"
-                android:layout_width="wrap_content"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_cities"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add" />
-        </LinearLayout>
+                android:scrollbars="vertical" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_cities"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical" />
-
-        <TextView
-            android:id="@+id/tv_error_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#bb0000"
-            android:textSize="12dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_update"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tv_error_message"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="refresh"
-                android:layout_gravity="bottom"/>
+                android:textColor="#bb0000"
+                android:textSize="12dp" />
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="refresh" />
+</RelativeLayout>

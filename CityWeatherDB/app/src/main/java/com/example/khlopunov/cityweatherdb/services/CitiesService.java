@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import com.example.khlopunov.cityweatherdb.entities.City;
 import com.example.khlopunov.cityweatherdb.models.WeatherPojo;
@@ -68,7 +70,10 @@ public class CitiesService extends IntentService {
             try {
                 Response<WeatherPojo> response = weatherCall.execute();
                 if (response.errorBody() != null) {                                //обработка ошибки
-
+                    Toast toast = Toast.makeText(getApplicationContext(), "asdasdasd", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0,0);
+                    toast.show();
+                    getContentResolver().notifyChange(CityContract.getBaseUri(), null);
                 } else {
                     WeatherPojo weatherMap = response.body();
                     System.out.println(weatherMap.getName());
@@ -104,13 +109,13 @@ public class CitiesService extends IntentService {
             }
             if (!citiesId.equals("")) {
                 citiesId = citiesId.substring(0, citiesId.length() - 1);
-                System.out.println("CITIES ID" + citiesId);
                 Call<WeatherPojo> weatherCall = openWeatherMap.updateWeather(citiesId, OpenWeatherMap.API_KEY);
 
                 try {
                     Response<WeatherPojo> response = weatherCall.execute();
                     if (response.errorBody() != null) {                                //обработка ошибки
-
+                        Toast.makeText(getApplicationContext(), "Не удается обновить данные", Toast.LENGTH_SHORT).show();
+                        getContentResolver().notifyChange(CityContract.getBaseUri(), null);
                     } else {
                         WeatherPojo weatherMap = response.body();
                         for (com.example.khlopunov.cityweatherdb.models.List getCities : weatherMap.getList()) {
@@ -119,6 +124,8 @@ public class CitiesService extends IntentService {
                             City mCity = new City(id, getCities.getName(), degrees);
                             getContentResolver().update(CityContract.getBaseUri(), CityContract.toContentValues(mCity),
                                     CityContract.CityEntry._ID + "=?", new String[]{String.valueOf(id)});
+                            getContentResolver().notifyChange(CityContract.getBaseUri(), null);
+
                         }
                     }
                 } catch (IOException e) {
