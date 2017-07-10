@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="CultureChallengerServer:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="CultureChallengerServer-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="CultureChallengerServer:war exploded" />
+    </root>
+  </artifact>
+</component>
